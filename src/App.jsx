@@ -86,10 +86,10 @@ function useEnergyIntel() {
     setLoading(true);
     setError("");
 
-    fetch("/api/energy-intel")
+    fetch(`${import.meta.env.BASE_URL}data/energy-intel.json`, { cache: "no-store" })
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`API ${response.status}`);
+          throw new Error(`Data cache ${response.status}`);
         }
         return response.json();
       })
@@ -226,7 +226,7 @@ function App() {
     [snapshot]
   );
 
-  const apiLiveCount = (snapshot.apiHealth || []).filter((source) => source.status === "live").length;
+  const apiLiveCount = (snapshot.apiHealth || []).filter((source) => source.status !== "fallback").length;
   const totalDatasets =
     (snapshot.dataGouv?.total || fallbackSnapshot.dataGouv.total) +
     (snapshot.odre?.total || fallbackSnapshot.odre.total);
@@ -315,7 +315,7 @@ function Sidebar({ activePage, setActivePage }) {
           <ShieldCheck size={18} />
           <span>Demo-safe</span>
         </div>
-        <p>Mode live API + fallback local pour garder une demo stable.</p>
+        <p>Mode cache statique + fallback local pour garder une demo stable.</p>
       </div>
     </aside>
   );
@@ -353,14 +353,14 @@ function TopBar({
           items={["Mission", "Sobriete", "ENR", "Gaz"]}
           label="Mode"
         />
-        <button className="icon-button" onClick={refresh} title="Rafraichir les APIs">
+        <button className="icon-button" onClick={refresh} title="Relire le cache de donnees">
           <RefreshCw size={18} className={loading ? "spin" : ""} />
         </button>
       </div>
 
       <div className="status-strip">
         <StatusPill
-          label={`${apiLiveCount}/4 sources live`}
+          label={`${apiLiveCount}/4 sources cache`}
           tone={apiLiveCount ? "live" : "fallback"}
         />
         <StatusPill label={`${formatNumber(totalDatasets)} jeux detectes`} tone="neutral" />
@@ -437,7 +437,7 @@ function CockpitPage({
       return { ...kpi, value: `${formatNumber(totalDatasets)}`, delta: `${catalog.length} cartes pretes` };
     }
     if (index === 1 && apiLiveCount > 0) {
-      return { ...kpi, delta: `${apiLiveCount} flux API actifs` };
+      return { ...kpi, delta: `${apiLiveCount} sources rafraichies` };
     }
     return kpi;
   });
@@ -506,7 +506,7 @@ function CockpitPage({
       </Panel>
 
       <Panel className="span-6">
-        <SectionHeader icon={Activity} eyebrow="Flux API" title="Etat des sources publiques" />
+        <SectionHeader icon={Activity} eyebrow="Cache data" title="Etat des sources publiques" />
         <div className="health-list">
           {liveSources.map((source) => (
             <div key={source.name} className="health-row">
@@ -516,8 +516,8 @@ function CockpitPage({
                 <small>{source.error || `${source.latency || 0} ms`}</small>
               </div>
               <StatusPill
-                label={source.status === "live" ? "live" : "fallback"}
-                tone={source.status === "live" ? "live" : "warning"}
+                label={source.status !== "fallback" ? "cache" : "fallback"}
+                tone={source.status !== "fallback" ? "live" : "warning"}
               />
             </div>
           ))}
@@ -562,8 +562,8 @@ function EnergyCore({ loading, liveCount }) {
       ))}
       <div className="core-center">
         {loading ? <RefreshCw className="spin" size={28} /> : <PlugZap size={30} />}
-        <strong>{liveCount ? "LIVE" : "SAFE"}</strong>
-        <small>{liveCount}/4 APIs</small>
+        <strong>{liveCount ? "CACHE" : "SAFE"}</strong>
+        <small>{liveCount}/4 sources</small>
       </div>
     </div>
   );
@@ -680,7 +680,7 @@ function CarbonPage({ methaneSeries }) {
         />
         <div className="carbon-callout">
           <strong>-58%</strong>
-          <span>Signal de baisse depuis 2016 dans le mode fallback / live records.</span>
+          <span>Signal de baisse depuis 2016 dans le cache statique ou le fallback.</span>
         </div>
       </Panel>
       <Panel className="span-12">
@@ -838,37 +838,38 @@ function SimulatorPage() {
 
 function DataExplorerPage({ catalog }) {
   const [query, setQuery] = useState("energie");
-  const [remoteResults, setRemoteResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [sourceFilter, setSourceFilter] = useState("Toutes");
 
   const filteredCatalog = useMemo(() => {
-    const source = remoteResults.length ? remoteResults : catalog;
+    const source = searchResults.length ? searchResults : catalog;
     return source.filter((dataset) => sourceFilter === "Toutes" || dataset.source === sourceFilter);
-  }, [catalog, remoteResults, sourceFilter]);
+  }, [catalog, searchResults, sourceFilter]);
 
   function runSearch(event) {
     event.preventDefault();
     setIsSearching(true);
-    fetch(`/api/search?q=${encodeURIComponent(query)}`)
-      .then((response) => response.json())
-      .then((data) => {
-        const normalized = (data.datasets || []).map((dataset) => ({
-          id: dataset.id,
-          title: dataset.title,
-          source: "data.gouv.fr",
-          publisher: dataset.organization,
-          theme: dataset.query,
-          energy: (dataset.tags || []).slice(0, 3).join(", "),
-          quality: dataset.quality,
-          records: dataset.resources,
-          page: dataset.page,
-          formats: dataset.formats || []
-        }));
-        setRemoteResults(normalized);
-      })
-      .catch(() => setRemoteResults([]))
-      .finally(() => setIsSearching(false));
+    const needle = query.trim().toLowerCase();
+    const results = needle
+      ? catalog.filter((dataset) =>
+          [
+            dataset.title,
+            dataset.source,
+            dataset.publisher,
+            dataset.theme,
+            dataset.energy,
+            ...(dataset.formats || [])
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase()
+            .includes(needle)
+        )
+      : catalog;
+
+    setSearchResults(results);
+    window.setTimeout(() => setIsSearching(false), 180);
   }
 
   return (
@@ -933,7 +934,7 @@ function SourcesPage({ snapshot, totalDatasets, catalog }) {
           </article>
           <article>
             <strong>Cache 5 minutes</strong>
-            <p>Les APIs publiques ne sont pas re-sollicitees a chaque navigation.</p>
+            <p>Les APIs publiques sont appelees par GitHub Actions, puis servies en JSON statique.</p>
           </article>
           <article>
             <strong>Fallback embarque</strong>

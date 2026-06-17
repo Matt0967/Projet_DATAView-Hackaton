@@ -1,0 +1,51 @@
+name: Refresh static GitHub Pages data
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-pages
+  cancel-in-progress: true
+
+jobs:
+  build-static-pages:
+    if: github.event_name != 'push' || !contains(github.event.head_commit.message, 'Refresh GitHub Pages static data')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate data and build docs
+        run: npm run build
+
+      - name: Commit refreshed static site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/energy-intel.json docs
+          if git diff --cached --quiet; then
+            echo "No static changes to commit."
+          else
+            git commit -m "Refresh GitHub Pages static data"
+            git push
+          fi

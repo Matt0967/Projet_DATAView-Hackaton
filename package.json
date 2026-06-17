@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "server": "node server/index.mjs",
-    "start": "node server/index.mjs",
+    "generate:data": "node scripts/generate-data.mjs",
+    "prebuild": "npm run generate:data",
     "build": "vite build",
+    "start": "vite preview --host 127.0.0.1",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
