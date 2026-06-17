@@ -1,98 +1,32 @@
 {
   "status": "static-cache",
-  "generatedAt": "2026-06-17T18:50:15.977Z",
+  "generatedAt": "2026-06-17T18:51:43.428Z",
   "staticGenerated": true,
   "apiHealth": [
     {
       "name": "data.gouv.fr",
       "status": "cached-live",
-      "latency": 624
+      "latency": 1167
     },
     {
       "name": "ODRE catalog",
       "status": "cached-live",
-      "latency": 1030
+      "latency": 2481
     },
     {
       "name": "ODRE methane records",
       "status": "cached-live",
-      "latency": 831
+      "latency": 1598
     },
     {
       "name": "ODRE gas scenarios",
       "status": "cached-live",
-      "latency": 511
+      "latency": 1723
     }
   ],
   "dataGouv": {
     "total": 568,
     "datasets": [
-      {
-        "id": "5db7bb20dee7e76680936949",
-        "title": "Consommation horaire provisoire de gaz des clients industriels raccordés sur le réseau de transport de gaz",
-        "description": "Ce jeu de données présente les valeurs **provisoires** des consommations de gaz à la maille nationale à un pas de temps horaire (en MWh [PCS](https://opendata.reseaux-energies.fr/pages/glossaire/) 0°C), c'est-à-dire des valeurs relevées au ",
-        "organization": "Open Data Réseaux Énergies",
-        "page": "https://www.data.gouv.fr/datasets/consommation-horaire-provisoire-de-gaz-des-clients-industriels-raccordes-sur-le-reseau-de-transport-de-gaz",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/consommation-horaire-provisoire-de-gaz-des-clients-industriels-raccordes-sur-le-reseau-de-transport-de-gaz/",
-        "query": "gaz",
-        "tags": [
-          "article-179",
-          "consommation",
-          "ltecv"
-        ],
-        "frequency": "daily",
-        "license": "lov2",
-        "quality": 100,
-        "resources": 3,
-        "formats": [
-          "csv",
-          "json"
-        ],
-        "lastUpdate": "2026-06-16T20:00:04+00:00",
-        "temporalCoverage": {
-          "end": "2023-05-03",
-          "start": "2018-01-04"
-        },
-        "metrics": {
-          "dataservices": 2,
-          "discussions": 0,
-          "discussions_open": 0,
-          "followers": 0,
-          "followers_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0
-          },
-          "resources_downloads": 1897,
-          "reuses": 1,
-          "reuses_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0
-          },
-          "views": 4050
-        }
-      },
       {
         "id": "5db7bb2006e3e7769f832c58",
         "title": "Consommation horaire définitive de gaz des clients industriels raccordés sur le réseau de transport de gaz",
@@ -157,6 +91,72 @@
             "2025-08": 0
           },
           "views": 4486
+        }
+      },
+      {
+        "id": "5db7bb20dee7e76680936949",
+        "title": "Consommation horaire provisoire de gaz des clients industriels raccordés sur le réseau de transport de gaz",
+        "description": "Ce jeu de données présente les valeurs **provisoires** des consommations de gaz à la maille nationale à un pas de temps horaire (en MWh [PCS](https://opendata.reseaux-energies.fr/pages/glossaire/) 0°C), c'est-à-dire des valeurs relevées au ",
+        "organization": "Open Data Réseaux Énergies",
+        "page": "https://www.data.gouv.fr/datasets/consommation-horaire-provisoire-de-gaz-des-clients-industriels-raccordes-sur-le-reseau-de-transport-de-gaz",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/consommation-horaire-provisoire-de-gaz-des-clients-industriels-raccordes-sur-le-reseau-de-transport-de-gaz/",
+        "query": "gaz",
+        "tags": [
+          "article-179",
+          "consommation",
+          "ltecv"
+        ],
+        "frequency": "daily",
+        "license": "lov2",
+        "quality": 100,
+        "resources": 3,
+        "formats": [
+          "csv",
+          "json"
+        ],
+        "lastUpdate": "2026-06-16T20:00:04+00:00",
+        "temporalCoverage": {
+          "end": "2023-05-03",
+          "start": "2018-01-04"
+        },
+        "metrics": {
+          "dataservices": 2,
+          "discussions": 0,
+          "discussions_open": 0,
+          "followers": 0,
+          "followers_by_months": {
+            "2024-08": 0,
+            "2024-09": 0,
+            "2024-10": 0,
+            "2024-11": 0,
+            "2024-12": 0,
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0
+          },
+          "resources_downloads": 1897,
+          "reuses": 1,
+          "reuses_by_months": {
+            "2024-08": 0,
+            "2024-09": 0,
+            "2024-10": 0,
+            "2024-11": 0,
+            "2024-12": 0,
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0
+          },
+          "views": 4050
         }
       },
       {
@@ -493,79 +493,6 @@
             "2025-08": 0
           },
           "views": 14264
-        }
-      },
-      {
-        "id": "609218a179d24006209bacce",
-        "title": "Indicateur Annualisé Gaz Renouvelable des territoires par region",
-        "description": "Ce jeu de données présente les valeurs du ratio entre la production locale de gaz renouvelable et la consommation locale de gaz sur le périmètre régional. Pour calculer ce ratio : • La quantité de gaz renouvelable produite les 3 derniers mo",
-        "organization": "Open Data Réseaux Énergies",
-        "page": "https://www.data.gouv.fr/datasets/indicateur-annualise-gaz-renouvelable-des-territoires-par-region",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/indicateur-annualise-gaz-renouvelable-des-territoires-par-region/",
-        "query": "renouvelable",
-        "tags": [
-          "biogaz",
-          "consommation",
-          "enr",
-          "igr",
-          "production",
-          "territoires-et-regions"
-        ],
-        "frequency": "monthly",
-        "license": "lov2",
-        "quality": 100,
-        "resources": 10,
-        "formats": [
-          "csv",
-          "json",
-          "pdf",
-          "zip",
-          "geojson",
-          "shp"
-        ],
-        "lastUpdate": "2026-06-16T06:30:05+00:00",
-        "temporalCoverage": {
-          "end": "2023-04-19",
-          "start": "2018-01-01"
-        },
-        "metrics": {
-          "dataservices": 2,
-          "discussions": 0,
-          "discussions_open": 0,
-          "followers": 0,
-          "followers_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0
-          },
-          "resources_downloads": 2685,
-          "reuses": 0,
-          "reuses_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0
-          },
-          "views": 3383
         }
       },
       {
@@ -916,6 +843,79 @@
             "2026-01": 0
           },
           "views": 948
+        }
+      },
+      {
+        "id": "6092189c8c7f3ca7049bacce",
+        "title": "Indicateur Mensuel Gaz Renouvelable des territoires par département",
+        "description": "Ce jeu de données présente les valeurs du ratio entre la production locale de gaz renouvelable et la consommation locale de gaz au périmètre départemental. Pour calculer ce ratio : * La **production** correspond à la quantité de gaz renouve",
+        "organization": "Open Data Réseaux Énergies",
+        "page": "https://www.data.gouv.fr/datasets/indicateur-mensuel-gaz-renouvelable-des-territoires-par-departement",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/indicateur-mensuel-gaz-renouvelable-des-territoires-par-departement/",
+        "query": "renouvelable",
+        "tags": [
+          "biogaz",
+          "consommation",
+          "enr",
+          "igr",
+          "production",
+          "territoires-et-regions"
+        ],
+        "frequency": "monthly",
+        "license": "lov2",
+        "quality": 89,
+        "resources": 10,
+        "formats": [
+          "csv",
+          "json",
+          "pdf",
+          "zip",
+          "geojson",
+          "shp"
+        ],
+        "lastUpdate": "2026-06-16T06:36:12+00:00",
+        "temporalCoverage": {
+          "end": "2023-04-27",
+          "start": "2020-01-01"
+        },
+        "metrics": {
+          "dataservices": 2,
+          "discussions": 0,
+          "discussions_open": 0,
+          "followers": 0,
+          "followers_by_months": {
+            "2024-08": 0,
+            "2024-09": 0,
+            "2024-10": 0,
+            "2024-11": 0,
+            "2024-12": 0,
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0
+          },
+          "resources_downloads": 4662,
+          "reuses": 0,
+          "reuses_by_months": {
+            "2024-08": 0,
+            "2024-09": 0,
+            "2024-10": 0,
+            "2024-11": 0,
+            "2024-12": 0,
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0
+          },
+          "views": 5690
         }
       },
       {
@@ -1484,49 +1484,35 @@
         }
       },
       {
-        "id": "609218a179d24006209baccd",
-        "title": "Indicateur Mensuel Gaz Renouvelable des territoires par EPCI",
-        "description": "Ce jeu de données présente les valeurs du ratio entre la production locale de gaz renouvelable et la consommation locale de gaz au périmètre des EPCI . Pour calculer ce ratio : * La **production** correspond à la quantité de gaz renouvelabl",
+        "id": "67da41494094139db4d60620",
+        "title": "Indicateur Gaz Renouvelables aux horizons 2030 et 2035",
+        "description": "Ce jeu de données restitue la dynamique de production de biométhane nationale par rapport à sa consommation de gaz (suivants 3 scénarios de consommation). Le calcul de ce ration s'appuie sur : * la production de gaz à horizon 2030 et 2035 d",
         "organization": "Open Data Réseaux Énergies",
-        "page": "https://www.data.gouv.fr/datasets/indicateur-mensuel-gaz-renouvelable-des-territoires-par-epci",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/indicateur-mensuel-gaz-renouvelable-des-territoires-par-epci/",
+        "page": "https://www.data.gouv.fr/datasets/indicateur-gaz-renouvelables-aux-horizons-2030-et-2035",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/indicateur-gaz-renouvelables-aux-horizons-2030-et-2035/",
         "query": "renouvelable",
         "tags": [
-          "biogaz",
           "consommation",
-          "enr",
           "igr",
           "production",
-          "territoires-et-regions"
+          "prospective"
         ],
-        "frequency": "monthly",
+        "frequency": "irregular",
         "license": "lov2",
         "quality": 78,
-        "resources": 10,
+        "resources": 2,
         "formats": [
           "csv",
-          "json",
-          "pdf",
-          "zip",
-          "geojson",
-          "shp"
+          "json"
         ],
-        "lastUpdate": "2021-04-15T12:58:35+00:00",
-        "temporalCoverage": {
-          "end": "2023-04-27",
-          "start": "2020-01-01"
-        },
+        "lastUpdate": "2025-03-14T14:34:06+00:00",
+        "temporalCoverage": null,
         "metrics": {
-          "dataservices": 1,
+          "dataservices": 2,
           "discussions": 0,
           "discussions_open": 0,
           "followers": 0,
           "followers_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
             "2025-01": 0,
             "2025-02": 0,
             "2025-03": 0,
@@ -1534,26 +1520,31 @@
             "2025-05": 0,
             "2025-06": 0,
             "2025-07": 0,
-            "2025-08": 0
+            "2025-08": 0,
+            "2025-09": 0,
+            "2025-10": 0,
+            "2025-11": 0,
+            "2025-12": 0,
+            "2026-01": 0
           },
-          "resources_downloads": 4391,
-          "reuses": 1,
+          "resources_downloads": 177,
+          "reuses": 0,
           "reuses_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
             "2025-01": 0,
             "2025-02": 0,
             "2025-03": 0,
             "2025-04": 0,
-            "2025-05": 1,
+            "2025-05": 0,
             "2025-06": 0,
             "2025-07": 0,
-            "2025-08": 0
+            "2025-08": 0,
+            "2025-09": 0,
+            "2025-10": 0,
+            "2025-11": 0,
+            "2025-12": 0,
+            "2026-01": 0
           },
-          "views": 5771
+          "views": 1438
         }
       },
       {
@@ -1754,6 +1745,78 @@
         }
       },
       {
+        "id": "658e09d36c5e5150a739c1d0",
+        "title": "Enquête climat universitaire INSPE Martinique (Data set)",
+        "description": "Ce jeu de données présente les premiers résultats de l'enquête \"Climat universitaire à l’INSPE de Martinique\", réalisée entre novembre et décembre 2023 par les étudiants de la première année du Master MEEF - mention Encadrement éducatif (Un",
+        "organization": "Maurizio",
+        "page": "https://www.data.gouv.fr/datasets/enquete-climat-universitaire-inspe-martinique-data-set",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/enquete-climat-universitaire-inspe-martinique-data-set/",
+        "query": "climat",
+        "tags": [
+          "antilles",
+          "bien-etre",
+          "climat-scolaire",
+          "climat-universitaire",
+          "etudiants",
+          "formation-des-enseignants",
+          "france",
+          "inspe",
+          "martinique",
+          "outre-mer",
+          "teacher-training",
+          "universite"
+        ],
+        "frequency": "never",
+        "license": "lov2",
+        "quality": 67,
+        "resources": 0,
+        "formats": [],
+        "lastUpdate": "2025-12-30T21:45:56.062000+00:00",
+        "temporalCoverage": {
+          "end": "2023-12-28",
+          "start": "2023-11-01"
+        },
+        "metrics": {
+          "dataservices": 0,
+          "discussions": 0,
+          "discussions_open": 0,
+          "followers": 0,
+          "followers_by_months": {
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0,
+            "2025-09": 0,
+            "2025-10": 0,
+            "2025-11": 0,
+            "2025-12": 0,
+            "2026-01": 0
+          },
+          "resources_downloads": null,
+          "reuses": 0,
+          "reuses_by_months": {
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0,
+            "2025-09": 0,
+            "2025-10": 0,
+            "2025-11": 0,
+            "2025-12": 0,
+            "2026-01": 0
+          },
+          "views": 1410
+        }
+      },
+      {
         "id": "59345882a3a72968e2876c8d",
         "title": "Surveillance de la qualité de l’air des stations d'Ambès",
         "description": "En Aquitaine, AIRAQ est en charge de la surveillance de la qualité de l’air. Le dispositif mis en place permet ainsi de connaitre en permanence les concentrations relevées dans l’air ambiant. AIRAQ a souhaité s’initier dans la démarche « in",
@@ -1815,70 +1878,6 @@
             "2025-08": 0
           },
           "views": 2191
-        }
-      },
-      {
-        "id": "5934587da3a72968e2876c8a",
-        "title": "Surveillance de la qualité de l’air de la station de Mérignac",
-        "description": "En Aquitaine, AIRAQ est en charge de la surveillance de la qualité de l’air. Le dispositif mis en place permet ainsi de connaitre en permanence les concentrations relevées dans l’air AIRAQ a souhaité s’initier dans la démarche « inventaire ",
-        "organization": "DELETED",
-        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-lair-de-la-station-de-merignac",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-lair-de-la-station-de-merignac/",
-        "query": "qualite air",
-        "tags": [
-          "climat",
-          "mesure",
-          "particules",
-          "pollution",
-          "qualite-air"
-        ],
-        "frequency": "annual",
-        "license": "notspecified",
-        "quality": 67,
-        "resources": 3,
-        "formats": [
-          "csv"
-        ],
-        "lastUpdate": "2019-07-24T06:03:35.021000+00:00",
-        "temporalCoverage": null,
-        "metrics": {
-          "dataservices": 0,
-          "discussions": 0,
-          "discussions_open": 0,
-          "followers": 0,
-          "followers_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0
-          },
-          "resources_downloads": 1195,
-          "reuses": 0,
-          "reuses_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0
-          },
-          "views": 2507
         }
       },
       {
@@ -2191,6 +2190,71 @@
         }
       },
       {
+        "id": "684c4c8b45e1b1cfad52b733",
+        "title": "Lignes du Réseau de Transport d Electricite aérien de RTE d'Auvergne-Rhône-Alpes",
+        "description": "Base de données cartographique de RTE (Réseau de Transport d' Électricité) au 1/25.000. Cette base de données est constituée de quatre fichiers représentant les lignes du réseau aérien, du réseau souterrain, les postes RTE et les pylônes RT",
+        "organization": "DREAL Auvergne-Rhône-Alpes",
+        "page": "https://www.data.gouv.fr/datasets/lignes-du-reseau-de-transport-d-electricite-aerien-de-rte-dauvergne-rhone-alpes",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/lignes-du-reseau-de-transport-d-electricite-aerien-de-rte-dauvergne-rhone-alpes/",
+        "query": "electricite",
+        "tags": [
+          "auvergne-rhone-alpes",
+          "gestion-de-crise",
+          "gestion-des-crises-et-des-risques",
+          "inspire",
+          "services-dutilite-publique-et-services-publics"
+        ],
+        "frequency": "unknown",
+        "license": "notspecified",
+        "quality": 56,
+        "resources": 3,
+        "formats": [
+          "zip",
+          "wfs"
+        ],
+        "lastUpdate": "2019-06-12T11:35:09+00:00",
+        "temporalCoverage": null,
+        "metrics": {
+          "dataservices": 0,
+          "discussions": 0,
+          "discussions_open": 0,
+          "followers": 0,
+          "followers_by_months": {
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0,
+            "2025-09": 0,
+            "2025-10": 0,
+            "2025-11": 0,
+            "2025-12": 0,
+            "2026-01": 0
+          },
+          "resources_downloads": 87,
+          "reuses": 0,
+          "reuses_by_months": {
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0,
+            "2025-09": 0,
+            "2025-10": 0,
+            "2025-11": 0,
+            "2025-12": 0,
+            "2026-01": 0
+          },
+          "views": 600
+        }
+      },
+      {
         "id": "684c4c3b45e1b1cfad52b650",
         "title": "Lignes du Réseau de Transport d Electricite souterrain de RTE d'Auvergne-Rhône-Alpes",
         "description": "Base de données cartographique de RTE (Réseau de Transport d' Électricité) au 1/25.000. Cette base de données est constituée de quatre fichiers représentant les lignes du réseau aérien, du réseau souterrain, les postes RTE et les pylônes RT",
@@ -2256,71 +2320,6 @@
             "2026-01": 0
           },
           "views": 860
-        }
-      },
-      {
-        "id": "684c4c8b45e1b1cfad52b733",
-        "title": "Lignes du Réseau de Transport d Electricite aérien de RTE d'Auvergne-Rhône-Alpes",
-        "description": "Base de données cartographique de RTE (Réseau de Transport d' Électricité) au 1/25.000. Cette base de données est constituée de quatre fichiers représentant les lignes du réseau aérien, du réseau souterrain, les postes RTE et les pylônes RT",
-        "organization": "DREAL Auvergne-Rhône-Alpes",
-        "page": "https://www.data.gouv.fr/datasets/lignes-du-reseau-de-transport-d-electricite-aerien-de-rte-dauvergne-rhone-alpes",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/lignes-du-reseau-de-transport-d-electricite-aerien-de-rte-dauvergne-rhone-alpes/",
-        "query": "electricite",
-        "tags": [
-          "auvergne-rhone-alpes",
-          "gestion-de-crise",
-          "gestion-des-crises-et-des-risques",
-          "inspire",
-          "services-dutilite-publique-et-services-publics"
-        ],
-        "frequency": "unknown",
-        "license": "notspecified",
-        "quality": 56,
-        "resources": 3,
-        "formats": [
-          "zip",
-          "wfs"
-        ],
-        "lastUpdate": "2019-06-12T11:35:09+00:00",
-        "temporalCoverage": null,
-        "metrics": {
-          "dataservices": 0,
-          "discussions": 0,
-          "discussions_open": 0,
-          "followers": 0,
-          "followers_by_months": {
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0,
-            "2025-09": 0,
-            "2025-10": 0,
-            "2025-11": 0,
-            "2025-12": 0,
-            "2026-01": 0
-          },
-          "resources_downloads": 87,
-          "reuses": 0,
-          "reuses_by_months": {
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0,
-            "2025-09": 0,
-            "2025-10": 0,
-            "2025-11": 0,
-            "2025-12": 0,
-            "2026-01": 0
-          },
-          "views": 600
         }
       },
       {
@@ -2524,6 +2523,42 @@
         }
       },
       {
+        "id": "6a20c42ff8606a2dad87daac",
+        "title": "SRADDET_Annexe_Schéma régional climat air énergie (SRCAE)",
+        "description": "Présentation les enjeux énergétiques du Schéma régional climat air énergie (SRCAE). Le SRCAE est construit à partir des données disponibles sur la base Energ’air mise en place par AtmosSud dans le cadre de l’Observatoire Régional de l’Energ",
+        "organization": "Région Provence-Alpes-Côte-d'Azur",
+        "page": "https://www.data.gouv.fr/datasets/sraddet-annexe-schema-regional-climat-air-energie-srcae",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/sraddet-annexe-schema-regional-climat-air-energie-srcae/",
+        "query": "climat",
+        "tags": [
+          "air",
+          "climat",
+          "consommation",
+          "energie",
+          "srcae"
+        ],
+        "frequency": "unknown",
+        "license": "lov2",
+        "quality": 56,
+        "resources": 1,
+        "formats": [
+          "pdf"
+        ],
+        "lastUpdate": "2025-07-03T00:00:00+00:00",
+        "temporalCoverage": null,
+        "metrics": {
+          "dataservices": 0,
+          "discussions": 0,
+          "discussions_open": 0,
+          "followers": 0,
+          "followers_by_months": 0,
+          "resources_downloads": 2,
+          "reuses": 0,
+          "reuses_by_months": 0,
+          "views": 161
+        }
+      },
+      {
         "id": "695c52933111a81e464d7b1f",
         "title": "Etude eau changement climatique : données climat",
         "description": "Les données présentes dans ce jeu de données sont celles utilisées dans le cadre de l'étude prospective ressource en eau et changement climatique. Les données climatiques renseignent des informations thermiques et hydriques variées (précipi",
@@ -2588,119 +2623,6 @@
             "2026-01": 0
           },
           "views": 461
-        }
-      },
-      {
-        "id": "6a20c42ff8606a2dad87daac",
-        "title": "SRADDET_Annexe_Schéma régional climat air énergie (SRCAE)",
-        "description": "Présentation les enjeux énergétiques du Schéma régional climat air énergie (SRCAE). Le SRCAE est construit à partir des données disponibles sur la base Energ’air mise en place par AtmosSud dans le cadre de l’Observatoire Régional de l’Energ",
-        "organization": "Région Provence-Alpes-Côte-d'Azur",
-        "page": "https://www.data.gouv.fr/datasets/sraddet-annexe-schema-regional-climat-air-energie-srcae",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/sraddet-annexe-schema-regional-climat-air-energie-srcae/",
-        "query": "climat",
-        "tags": [
-          "air",
-          "climat",
-          "consommation",
-          "energie",
-          "srcae"
-        ],
-        "frequency": "unknown",
-        "license": "lov2",
-        "quality": 56,
-        "resources": 1,
-        "formats": [
-          "pdf"
-        ],
-        "lastUpdate": "2025-07-03T00:00:00+00:00",
-        "temporalCoverage": null,
-        "metrics": {
-          "dataservices": 0,
-          "discussions": 0,
-          "discussions_open": 0,
-          "followers": 0,
-          "followers_by_months": 0,
-          "resources_downloads": 2,
-          "reuses": 0,
-          "reuses_by_months": 0,
-          "views": 161
-        }
-      },
-      {
-        "id": "66d10c871965f2674070937a",
-        "title": "Vegetation dynamics and climate change (observing task of the SO OCOVE)",
-        "description": "Data from the 'Vegetation dynamics and climate change' Observing Task, part of the Plant communities observatory (OCOVE) Observation Service of the Montpellier Research Observatory of Environment (OSU OREME, oreme.org).",
-        "organization": "Observatoire de Recherche Montpelliérain de l'Environnement",
-        "page": "https://www.data.gouv.fr/datasets/vegetation-dynamics-and-climate-change-observing-task-of-the-so-ocove-2",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/vegetation-dynamics-and-climate-change-observing-task-of-the-so-ocove-2/",
-        "query": "climat",
-        "tags": [
-          "climate-change",
-          "community-composition-taxonomic-diversity",
-          "drought",
-          "ecology",
-          "ecosystem-function-disturbance-regime",
-          "ecosystem-function-net-primary-productivity",
-          "environmental-monitoring-facilities",
-          "flora",
-          "habitats-and-biotopes",
-          "larzac-causse",
-          "phenology",
-          "plant-communities",
-          "plants",
-          "species-distribution",
-          "species-traits-phenology",
-          "taxonomic-dynamics"
-        ],
-        "frequency": "irregular",
-        "license": "fr-lo",
-        "quality": 56,
-        "resources": 5,
-        "formats": [
-          "www:link-1.0-http--link",
-          "ogc:wms",
-          "ogc:wfs"
-        ],
-        "lastUpdate": "2025-12-18T00:00:00+00:00",
-        "temporalCoverage": null,
-        "metrics": {
-          "dataservices": 1,
-          "discussions": 0,
-          "discussions_open": 0,
-          "followers": 0,
-          "followers_by_months": {
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0,
-            "2025-09": 0,
-            "2025-10": 0,
-            "2025-11": 0,
-            "2025-12": 0,
-            "2026-01": 0
-          },
-          "resources_downloads": 371,
-          "reuses": 0,
-          "reuses_by_months": {
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0,
-            "2025-09": 0,
-            "2025-10": 0,
-            "2025-11": 0,
-            "2025-12": 0,
-            "2026-01": 0
-          },
-          "views": 696
         }
       },
       {
@@ -2770,6 +2692,130 @@
         }
       },
       {
+        "id": "5369a133a3a729239d206549",
+        "title": "Surveillance de la qualité de l’air station urbaine de fond : Bassens",
+        "description": "L'objectif de ces stations est le suivi du niveau d'exposition moyen de la population aux phénomènes de pollution atmosphérique dits de \"fond\" dans les centres urbains. Elles sont situées dans des quartiers densément peuplés (entre 3 000 et",
+        "organization": "Airaq",
+        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-l-air-station-urbaine-de-fond-bassens-rdl",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-l-air-station-urbaine-de-fond-bassens-rdl/",
+        "query": "qualite air",
+        "tags": [
+          "air",
+          "pollution",
+          "urbain"
+        ],
+        "frequency": "annual",
+        "license": "fr-lo",
+        "quality": 56,
+        "resources": 2,
+        "formats": [
+          "csv"
+        ],
+        "lastUpdate": "2013-09-18T08:45:22.339000+00:00",
+        "temporalCoverage": null,
+        "metrics": {
+          "dataservices": 0,
+          "discussions": 0,
+          "discussions_open": 0,
+          "followers": 0,
+          "followers_by_months": {
+            "2024-08": 0,
+            "2024-09": 0,
+            "2024-10": 0,
+            "2024-11": 0,
+            "2024-12": 0,
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0
+          },
+          "resources_downloads": 949,
+          "reuses": 0,
+          "reuses_by_months": {
+            "2024-08": 0,
+            "2024-09": 0,
+            "2024-10": 0,
+            "2024-11": 0,
+            "2024-12": 0,
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0
+          },
+          "views": 3213
+        }
+      },
+      {
+        "id": "5369a130a3a729239d206543",
+        "title": "Surveillance de la qualité de l’air Station périurbaines de fond Ambès",
+        "description": "En Aquitaine, AIRAQ est en charge de la surveillance de la qualité de l’air. Le dispositif mis en place permet ainsi de connaitre en permanence les concentrations relevées dans l’air ambiant. AIRAQ a souhaité s’initier dans la démarche « in",
+        "organization": "Airaq",
+        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-l-air-station-periurbaines-de-fond-ambes-rdl",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-l-air-station-periurbaines-de-fond-ambes-rdl/",
+        "query": "qualite air",
+        "tags": [
+          "air",
+          "environnement",
+          "pollution"
+        ],
+        "frequency": "annual",
+        "license": "odc-odbl",
+        "quality": 56,
+        "resources": 2,
+        "formats": [
+          "csv"
+        ],
+        "lastUpdate": "2013-09-18T08:47:30.939000+00:00",
+        "temporalCoverage": null,
+        "metrics": {
+          "dataservices": 0,
+          "discussions": 0,
+          "discussions_open": 0,
+          "followers": 0,
+          "followers_by_months": {
+            "2024-08": 0,
+            "2024-09": 0,
+            "2024-10": 0,
+            "2024-11": 0,
+            "2024-12": 0,
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0
+          },
+          "resources_downloads": 859,
+          "reuses": 0,
+          "reuses_by_months": {
+            "2024-08": 0,
+            "2024-09": 0,
+            "2024-10": 0,
+            "2024-11": 0,
+            "2024-12": 0,
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0
+          },
+          "views": 2268
+        }
+      },
+      {
         "id": "5dc0f53ddee7e77f0b93694a",
         "title": "Schema Directeur Energie - Consommations en énergie finale",
         "description": "**Consommations énergétiques de l’ensemble des secteurs d’activité (exprimée en énergie finale et en énergie primaire)** --- **Le Schéma Directeur des Energies (SDE) : données issues du modèle énergétique** Sur la base des données de l’AREC",
@@ -2832,6 +2878,64 @@
             "2025-08": 0
           },
           "views": 3176
+        }
+      },
+      {
+        "id": "678f01b4b07968eed425a3c0",
+        "title": "Energie - Sites et les projets énergies renouvelables en Loir-et-Cher",
+        "description": "Sites et les projets énergies renouvelables en Loir-et-Cher",
+        "organization": "Direction Départementale des Territoires de Loir-et-Cher",
+        "page": "https://www.data.gouv.fr/datasets/energie-sites-et-les-projets-energies-renouvelables-en-loir-et-cher-1",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/energie-sites-et-les-projets-energies-renouvelables-en-loir-et-cher-1/",
+        "query": "energie",
+        "tags": [
+          "donnees-ouvertes",
+          "i-carto2",
+          "i-durable",
+          "i-eolien",
+          "i-methanisation",
+          "i-photovoltaique",
+          "i-renouvelable",
+          "inspire",
+          "site-industriel-production-site-de-production-denergie",
+          "site-industriel-production-site-eolien",
+          "sources-denergie"
+        ],
+        "frequency": "unknown",
+        "license": "lov2",
+        "quality": 44,
+        "resources": 6,
+        "formats": [
+          "esri shapefile (shp)",
+          "wms",
+          "wfs"
+        ],
+        "lastUpdate": "2026-06-04T00:00:00+00:00",
+        "temporalCoverage": null,
+        "metrics": {
+          "dataservices": 1,
+          "discussions": 0,
+          "discussions_open": 0,
+          "followers": 0,
+          "followers_by_months": 0,
+          "resources_downloads": 103,
+          "reuses": 0,
+          "reuses_by_months": {
+            "2024-07": 0,
+            "2024-08": 0,
+            "2024-09": 0,
+            "2024-10": 0,
+            "2024-11": 0,
+            "2024-12": 0,
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0
+          },
+          "views": 431
         }
       },
       {
@@ -2904,64 +3008,6 @@
             "2026-01": 0
           },
           "views": 823
-        }
-      },
-      {
-        "id": "678f01b4b07968eed425a3c0",
-        "title": "Energie - Sites et les projets énergies renouvelables en Loir-et-Cher",
-        "description": "Sites et les projets énergies renouvelables en Loir-et-Cher",
-        "organization": "Direction Départementale des Territoires de Loir-et-Cher",
-        "page": "https://www.data.gouv.fr/datasets/energie-sites-et-les-projets-energies-renouvelables-en-loir-et-cher-1",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/energie-sites-et-les-projets-energies-renouvelables-en-loir-et-cher-1/",
-        "query": "energie",
-        "tags": [
-          "donnees-ouvertes",
-          "i-carto2",
-          "i-durable",
-          "i-eolien",
-          "i-methanisation",
-          "i-photovoltaique",
-          "i-renouvelable",
-          "inspire",
-          "site-industriel-production-site-de-production-denergie",
-          "site-industriel-production-site-eolien",
-          "sources-denergie"
-        ],
-        "frequency": "unknown",
-        "license": "lov2",
-        "quality": 44,
-        "resources": 6,
-        "formats": [
-          "esri shapefile (shp)",
-          "wms",
-          "wfs"
-        ],
-        "lastUpdate": "2026-06-04T00:00:00+00:00",
-        "temporalCoverage": null,
-        "metrics": {
-          "dataservices": 1,
-          "discussions": 0,
-          "discussions_open": 0,
-          "followers": 0,
-          "followers_by_months": 0,
-          "resources_downloads": 103,
-          "reuses": 0,
-          "reuses_by_months": {
-            "2024-07": 0,
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0
-          },
-          "views": 431
         }
       },
       {
@@ -3345,6 +3391,68 @@
         }
       },
       {
+        "id": "66d651e86922f478dc22770c",
+        "title": "PLN 2023 Qualité AIR",
+        "description": "Sonde Station Piscine et sonde station capitainerie Surveillance continue par ministations Analyses Dioxyde d'azote NO 2 Analyses Dioxyde de soufre SO 2 Anlayses Particules PM 10",
+        "organization": "Région Occitanie / Pyrénées Méditerranée",
+        "page": "https://www.data.gouv.fr/datasets/pln-2023-qualite-air",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/pln-2023-qualite-air/",
+        "query": "qualite air",
+        "tags": [
+          "developpement-durable",
+          "port-la-nouvelle"
+        ],
+        "frequency": "unknown",
+        "license": "lov2",
+        "quality": 44,
+        "resources": 2,
+        "formats": [
+          "csv",
+          "json"
+        ],
+        "lastUpdate": "2024-06-05T07:04:05+00:00",
+        "temporalCoverage": null,
+        "metrics": {
+          "dataservices": 1,
+          "discussions": 0,
+          "discussions_open": 0,
+          "followers": 0,
+          "followers_by_months": {
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0,
+            "2025-09": 0,
+            "2025-10": 0,
+            "2025-11": 0,
+            "2025-12": 0,
+            "2026-01": 0
+          },
+          "resources_downloads": 288,
+          "reuses": 0,
+          "reuses_by_months": {
+            "2025-01": 0,
+            "2025-02": 0,
+            "2025-03": 0,
+            "2025-04": 0,
+            "2025-05": 0,
+            "2025-06": 0,
+            "2025-07": 0,
+            "2025-08": 0,
+            "2025-09": 0,
+            "2025-10": 0,
+            "2025-11": 0,
+            "2025-12": 0,
+            "2026-01": 0
+          },
+          "views": 1156
+        }
+      },
+      {
         "id": "66d25d4e678b878c3d227716",
         "title": "PLN 2021 Qualité AIR",
         "description": "Sonde Station Piscine et sonde station capitainerie Surveillance continue par ministations Analyses Dioxyde d'azote NO 2 Analyses Dioxyde de soufre SO 2 Anlayses Particules PM 10",
@@ -3407,68 +3515,6 @@
             "2026-01": 0
           },
           "views": 784
-        }
-      },
-      {
-        "id": "66d651e86922f478dc22770c",
-        "title": "PLN 2023 Qualité AIR",
-        "description": "Sonde Station Piscine et sonde station capitainerie Surveillance continue par ministations Analyses Dioxyde d'azote NO 2 Analyses Dioxyde de soufre SO 2 Anlayses Particules PM 10",
-        "organization": "Région Occitanie / Pyrénées Méditerranée",
-        "page": "https://www.data.gouv.fr/datasets/pln-2023-qualite-air",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/pln-2023-qualite-air/",
-        "query": "qualite air",
-        "tags": [
-          "developpement-durable",
-          "port-la-nouvelle"
-        ],
-        "frequency": "unknown",
-        "license": "lov2",
-        "quality": 44,
-        "resources": 2,
-        "formats": [
-          "csv",
-          "json"
-        ],
-        "lastUpdate": "2024-06-05T07:04:05+00:00",
-        "temporalCoverage": null,
-        "metrics": {
-          "dataservices": 1,
-          "discussions": 0,
-          "discussions_open": 0,
-          "followers": 0,
-          "followers_by_months": {
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0,
-            "2025-09": 0,
-            "2025-10": 0,
-            "2025-11": 0,
-            "2025-12": 0,
-            "2026-01": 0
-          },
-          "resources_downloads": 288,
-          "reuses": 0,
-          "reuses_by_months": {
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0,
-            "2025-09": 0,
-            "2025-10": 0,
-            "2025-11": 0,
-            "2025-12": 0,
-            "2026-01": 0
-          },
-          "views": 1156
         }
       },
       {
@@ -3905,12 +3951,12 @@
         }
       },
       {
-        "id": "59d30efda3a7291993b1eafc",
+        "id": "59cf1b49b59508043de9b8a3",
         "title": "Surveillance de la qualité de l’air station urbaine de fond : Bassens",
         "description": "L'objectif de ces stations est le suivi du niveau d'exposition moyen de la population aux phénomènes de pollution atmosphérique dits de \"fond\" dans les centres urbains. Elles sont situées dans des quartiers densément peuplés (entre 3 000 et",
         "organization": "Ressourcerie datalocale",
-        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-lair-station-urbaine-de-fond-bassens-2",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-lair-station-urbaine-de-fond-bassens-2/",
+        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-lair-station-urbaine-de-fond-bassens-1",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-lair-station-urbaine-de-fond-bassens-1/",
         "query": "qualite air",
         "tags": [
           "air",
@@ -3920,11 +3966,11 @@
         "frequency": "unknown",
         "license": "notspecified",
         "quality": 33,
-        "resources": 2,
+        "resources": 6,
         "formats": [
           "csv"
         ],
-        "lastUpdate": "2017-10-03T06:15:57.747000+00:00",
+        "lastUpdate": "2017-10-02T07:52:37.633000+00:00",
         "temporalCoverage": null,
         "metrics": {
           "dataservices": 0,
@@ -3946,7 +3992,7 @@
             "2025-07": 0,
             "2025-08": 0
           },
-          "resources_downloads": 614,
+          "resources_downloads": 2103,
           "reuses": 0,
           "reuses_by_months": {
             "2024-08": 0,
@@ -3963,81 +4009,20 @@
             "2025-07": 0,
             "2025-08": 0
           },
-          "views": 1687
+          "views": 2566
         }
       },
       {
-        "id": "595923b4a3a7291dcf9c823a",
-        "title": "Surveillance de la qualité de l’air Station périurbaines de fond Ambès",
+        "id": "59cf1b48a3a7291993b1ea1e",
+        "title": "Surveillance de la qualité de l’air station proximité automobile de Mérignac",
         "description": "En Aquitaine, AIRAQ est en charge de la surveillance de la qualité de l’air. Le dispositif mis en place permet ainsi de connaitre en permanence les concentrations relevées dans l’air ambiant. AIRAQ a souhaité s’initier dans la démarche « in",
         "organization": "Ressourcerie datalocale",
-        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-lair-station-periurbaines-de-fond-ambes",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-lair-station-periurbaines-de-fond-ambes/",
+        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-lair-station-proximite-automobile-de-merignac-1",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-lair-station-proximite-automobile-de-merignac-1/",
         "query": "qualite air",
         "tags": [
           "air",
-          "environnement",
-          "pollution"
-        ],
-        "frequency": "unknown",
-        "license": "notspecified",
-        "quality": 33,
-        "resources": 56,
-        "formats": [
-          "csv"
-        ],
-        "lastUpdate": "2017-09-29T07:54:08.524000+00:00",
-        "temporalCoverage": null,
-        "metrics": {
-          "dataservices": 0,
-          "discussions": 0,
-          "discussions_open": 0,
-          "followers": 0,
-          "followers_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0
-          },
-          "resources_downloads": 11026,
-          "reuses": 0,
-          "reuses_by_months": {
-            "2024-08": 0,
-            "2024-09": 0,
-            "2024-10": 0,
-            "2024-11": 0,
-            "2024-12": 0,
-            "2025-01": 0,
-            "2025-02": 0,
-            "2025-03": 0,
-            "2025-04": 0,
-            "2025-05": 0,
-            "2025-06": 0,
-            "2025-07": 0,
-            "2025-08": 0
-          },
-          "views": 2308
-        }
-      },
-      {
-        "id": "59cf1b46b59508043de9b8a2",
-        "title": "Surveillance de la qualité de l’air Station périurbaines de fond Léognan",
-        "description": "En Aquitaine, AIRAQ est en charge de la surveillance de la qualité de l’air. Le dispositif mis en place permet ainsi de connaitre en permanence les concentrations relevées dans l’air ambiant. AIRAQ a souhaité s’initier dans la démarche « in",
-        "organization": "Ressourcerie datalocale",
-        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-lair-station-periurbaines-de-fond-leognan-1",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-lair-station-periurbaines-de-fond-leognan-1/",
-        "query": "qualite air",
-        "tags": [
-          "air",
+          "circulation",
           "environnement",
           "pollution"
         ],
@@ -4048,7 +4033,7 @@
         "formats": [
           "csv"
         ],
-        "lastUpdate": "2017-10-02T07:52:34.136000+00:00",
+        "lastUpdate": "2017-10-02T07:52:37.295000+00:00",
         "temporalCoverage": null,
         "metrics": {
           "dataservices": 0,
@@ -4070,7 +4055,7 @@
             "2025-07": 0,
             "2025-08": 0
           },
-          "resources_downloads": 694,
+          "resources_downloads": 1006,
           "reuses": 0,
           "reuses_by_months": {
             "2024-08": 0,
@@ -4087,16 +4072,16 @@
             "2025-07": 0,
             "2025-08": 0
           },
-          "views": 1566
+          "views": 1864
         }
       },
       {
-        "id": "59d30ef5a3a7291993b1eafb",
-        "title": "Surveillance de la qualité de l’air Station périurbaines de fond Ambès",
+        "id": "595923b6a3a7291dd09c81d1",
+        "title": "Surveillance de la qualité de l’air Station périurbaines de fond Léognan",
         "description": "En Aquitaine, AIRAQ est en charge de la surveillance de la qualité de l’air. Le dispositif mis en place permet ainsi de connaitre en permanence les concentrations relevées dans l’air ambiant. AIRAQ a souhaité s’initier dans la démarche « in",
         "organization": "Ressourcerie datalocale",
-        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-lair-station-periurbaines-de-fond-ambes-2",
-        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-lair-station-periurbaines-de-fond-ambes-2/",
+        "page": "https://www.data.gouv.fr/datasets/surveillance-de-la-qualite-de-lair-station-periurbaines-de-fond-leognan",
+        "uri": "https://www.data.gouv.fr/api/1/datasets/surveillance-de-la-qualite-de-lair-station-periurbaines-de-fond-leognan/",
         "query": "qualite air",
         "tags": [
           "air",
@@ -4106,11 +4091,11 @@
         "frequency": "unknown",
         "license": "notspecified",
         "quality": 33,
-        "resources": 2,
+        "resources": 28,
         "formats": [
           "csv"
         ],
-        "lastUpdate": "2017-10-03T06:15:49.337000+00:00",
+        "lastUpdate": "2017-09-29T07:54:16.046000+00:00",
         "temporalCoverage": null,
         "metrics": {
           "dataservices": 0,
@@ -4132,7 +4117,7 @@
             "2025-07": 0,
             "2025-08": 0
           },
-          "resources_downloads": 495,
+          "resources_downloads": 6344,
           "reuses": 0,
           "reuses_by_months": {
             "2024-08": 0,
@@ -4149,7 +4134,7 @@
             "2025-07": 0,
             "2025-08": 0
           },
-          "views": 1738
+          "views": 1710
         }
       }
     ]
