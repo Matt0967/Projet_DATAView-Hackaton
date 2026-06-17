@@ -53,6 +53,7 @@ a {
   inset: 0;
   pointer-events: none;
   overflow: hidden;
+  contain: paint;
   z-index: 0;
 }
 
@@ -71,12 +72,13 @@ a {
 
 .grid-plane {
   position: absolute;
-  inset: 0;
+  inset: auto -10vw -18vh -10vw;
+  height: 82vh;
   background-image:
     linear-gradient(rgba(56, 189, 248, 0.08) 1px, transparent 1px),
     linear-gradient(90deg, rgba(45, 212, 191, 0.06) 1px, transparent 1px);
   background-size: 44px 44px;
-  transform: perspective(700px) rotateX(58deg) translateY(18vh);
+  transform: perspective(700px) rotateX(58deg);
   transform-origin: center bottom;
   opacity: 0.45;
 }
@@ -917,51 +919,92 @@ a {
 .france-map {
   display: grid;
   width: 100%;
-  min-height: 560px;
+  min-height: clamp(420px, 54vw, 620px);
   place-items: center;
+  overflow: hidden;
 }
 
 .france-map.compact {
-  min-height: 280px;
+  min-height: clamp(260px, 38vw, 330px);
 }
 
 .france-map svg {
-  width: min(100%, 700px);
+  display: block;
+  width: min(100%, 680px);
   height: auto;
+  max-height: min(620px, 72vh);
+  overflow: visible;
 }
 
-.france-outline {
-  fill: rgba(56, 189, 248, 0.045);
-  stroke: rgba(56, 189, 248, 0.35);
-  stroke-width: 2;
+.france-map.compact svg {
+  width: min(100%, 430px);
+  max-height: 300px;
 }
 
-.region-link {
-  stroke: rgba(45, 212, 191, 0.12);
-  stroke-width: 1;
+.region-paths {
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.22));
 }
 
-.region-node {
+.france-region {
   cursor: pointer;
-  fill: rgba(56, 189, 248, 0.42);
-  stroke: rgba(255, 255, 255, 0.6);
-  stroke-width: 2;
+  fill: rgba(56, 189, 248, var(--region-tone));
+  stroke: rgba(159, 221, 244, 0.72);
+  stroke-width: 1.45;
+  vector-effect: non-scaling-stroke;
   transition:
-    r 160ms ease,
-    fill 160ms ease,
-    stroke 160ms ease;
+    fill 180ms ease,
+    stroke 180ms ease,
+    filter 180ms ease,
+    transform 180ms ease;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-.region-node:hover,
-.region-node.selected {
-  fill: rgba(45, 212, 191, 0.85);
+.france-region:hover,
+.france-region:focus-visible {
+  fill: rgba(45, 212, 191, 0.72);
   stroke: #eef5f8;
+  outline: none;
+  filter: url("#regionGlow");
+}
+
+.france-region.selected {
+  fill: rgba(45, 212, 191, 0.88);
+  stroke: #ffffff;
+  stroke-width: 2.2;
+  filter: url("#regionGlow");
 }
 
 .region-text {
   pointer-events: none;
-  fill: #eef5f8;
-  font-size: 12px;
+  fill: rgba(238, 245, 248, 0.82);
+  font-size: 13px;
+  font-weight: 900;
+  paint-order: stroke;
+  stroke: rgba(4, 8, 12, 0.8);
+  stroke-width: 4;
+  vector-effect: non-scaling-stroke;
+}
+
+.region-text.selected {
+  fill: #061211;
+  stroke: rgba(238, 245, 248, 0.86);
+  stroke-width: 5;
+}
+
+.map-compass circle {
+  fill: rgba(255, 255, 255, 0.055);
+  stroke: rgba(255, 255, 255, 0.18);
+  stroke-width: 1;
+}
+
+.map-compass path {
+  fill: rgba(45, 212, 191, 0.9);
+}
+
+.map-compass text {
+  fill: #aebdc4;
+  font-size: 13px;
   font-weight: 900;
 }
 
@@ -1461,6 +1504,30 @@ td {
   }
 
   .france-map {
-    min-height: 420px;
+    min-height: clamp(330px, 100vw, 430px);
+    overflow: hidden;
+  }
+
+  .france-map svg {
+    width: min(100%, 390px);
+    max-height: 430px;
+  }
+
+  .france-map.compact {
+    min-height: 260px;
+  }
+
+  .france-map.compact svg {
+    width: min(100%, 320px);
+    max-height: 290px;
+  }
+
+  .region-text {
+    font-size: 11px;
+    stroke-width: 3.4;
+  }
+
+  .map-compass {
+    display: none;
   }
 }

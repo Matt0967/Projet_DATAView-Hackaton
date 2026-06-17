@@ -40,6 +40,7 @@ import {
   sourceFamilies,
   timelineMoments
 } from "./data/fallbackData.js";
+import { franceMapViewBox, franceRegionPaths } from "./data/franceMapPaths.js";
 
 const pageConfig = [
   { id: "cockpit", label: "Cockpit", icon: Gauge },
@@ -1108,45 +1109,83 @@ function RadialMeter({ label, value, color }) {
 }
 
 function MiniFranceMap({ selectedRegion, setSelectedRegion, compact = false }) {
+  const regionSignalsById = new Map(regionalSignals.map((region) => [region.id, region]));
+
+  function selectRegion(regionPath) {
+    const signal = regionSignalsById.get(regionPath.id);
+    if (signal) setSelectedRegion(signal);
+  }
+
+  function regionTone(signal) {
+    if (!signal) return 0.35;
+    return 0.28 + signal.intensity / 170;
+  }
+
   return (
     <div className={compact ? "france-map compact" : "france-map"}>
-      <svg viewBox="0 0 660 690" role="img" aria-label="Carte interactive de la France">
-        <path
-          className="france-outline"
-          d="M320 47 L418 80 L498 148 L530 244 L588 318 L552 430 L588 526 L522 594 L432 590 L353 640 L257 601 L186 530 L124 430 L82 321 L117 214 L196 127 Z"
-        />
-        {regionalSignals.map((region) => {
-          const selected = selectedRegion.id === region.id;
-          return (
-            <g key={region.id}>
-              <circle
-                cx={region.x}
-                cy={region.y}
-                r={selected ? 26 : 19}
-                className={selected ? "region-node selected" : "region-node"}
-                style={{ "--intensity": region.intensity }}
-                onClick={() => setSelectedRegion(region)}
-              />
-              <text x={region.x} y={region.y + 4} textAnchor="middle" className="region-text">
-                {region.region
-                  .split(" ")
-                  .map((word) => word[0])
-                  .join("")
-                  .slice(0, 3)}
+      <svg viewBox={franceMapViewBox} role="img" aria-label="Carte interactive des regions de France">
+        <defs>
+          <filter id="regionGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#2dd4bf" floodOpacity="0.35" />
+          </filter>
+        </defs>
+
+        <g className="region-paths">
+          {franceRegionPaths.map((regionPath) => {
+            const signal = regionSignalsById.get(regionPath.id);
+            const selected = selectedRegion.id === regionPath.id;
+            const label = signal?.region || regionPath.name;
+
+            return (
+              <path
+                key={regionPath.id}
+                className={selected ? "france-region selected" : "france-region"}
+                d={regionPath.d}
+                style={{ "--region-tone": regionTone(signal) }}
+                tabIndex="0"
+                role="button"
+                aria-label={label}
+                onClick={() => selectRegion(regionPath)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    selectRegion(regionPath);
+                  }
+                }}
+              >
+                <title>{label}</title>
+              </path>
+            );
+          })}
+        </g>
+
+        <g className="region-labels" aria-hidden="true">
+          {franceRegionPaths.map((regionPath) => {
+            const signal = regionSignalsById.get(regionPath.id);
+            const selected = selectedRegion.id === regionPath.id;
+            return (
+              <text
+                key={regionPath.id}
+                x={regionPath.labelX}
+                y={regionPath.labelY}
+                textAnchor="middle"
+                className={selected ? "region-text selected" : "region-text"}
+              >
+                {regionPath.label}
               </text>
-            </g>
-          );
-        })}
-        {regionalSignals.slice(1).map((region) => (
-          <line
-            key={`line-${region.id}`}
-            x1={selectedRegion.x}
-            y1={selectedRegion.y}
-            x2={region.x}
-            y2={region.y}
-            className="region-link"
-          />
-        ))}
+            );
+          })}
+        </g>
+
+        {!compact && (
+          <g className="map-compass" aria-hidden="true">
+            <circle cx="560" cy="86" r="31" />
+            <path d="M560 58 L568 88 L560 80 L552 88 Z" />
+            <text x="560" y="106" textAnchor="middle">
+              N
+            </text>
+          </g>
+        )}
       </svg>
     </div>
   );
