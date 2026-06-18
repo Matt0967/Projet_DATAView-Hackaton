@@ -51,9 +51,9 @@ Le workflow `.github/workflows/refresh-pages.yml` regenere les donnees et le bui
 - Production : tendances production et consommation.
 - Carbone : emissions sectorielles, methane, matrice impact/complexite.
 - Carte France : signaux regionaux interactifs.
-- Monde : comparaison France / monde.
+- Monde : globe 3D interactif, radar de zones, comparaison France / monde et diagnostic cache/API.
 - Simulateur : sliders pour tester un scenario 2030.
-- Data explorer : recherche locale dans le cache data.gouv.fr + ODRE.
+- Data explorer : recherche locale dans le cache data.gouv.fr + ODRE et export CSV des resultats filtres.
 - Sources : constellation des familles de donnees et strategie anti-bug.
 
 ## Donnees

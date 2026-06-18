@@ -337,12 +337,78 @@ export const regionalSignals = [
 ];
 
 export const globalSignals = [
-  { label: "Monde", fossil: 80, lowCarbon: 20, demand: 100, risk: 74 },
-  { label: "Union europeenne", fossil: 69, lowCarbon: 31, demand: 88, risk: 56 },
-  { label: "France", fossil: 46, lowCarbon: 54, demand: 71, risk: 37 },
-  { label: "Amerique du Nord", fossil: 78, lowCarbon: 22, demand: 112, risk: 69 },
-  { label: "Asie-Pacifique", fossil: 84, lowCarbon: 16, demand: 142, risk: 82 },
-  { label: "Afrique", fossil: 71, lowCarbon: 29, demand: 46, risk: 66 }
+  {
+    label: "Monde",
+    fossil: 80,
+    lowCarbon: 20,
+    demand: 100,
+    risk: 74,
+    lat: 18,
+    lon: 20,
+    color: "#f97316",
+    momentum: "+2.1%",
+    note: "Point de repere global pour comparer les trajectoires nationales."
+  },
+  {
+    label: "Union europeenne",
+    fossil: 69,
+    lowCarbon: 31,
+    demand: 88,
+    risk: 56,
+    lat: 50,
+    lon: 9,
+    color: "#38bdf8",
+    momentum: "+4.8%",
+    note: "Forte acceleration reglementaire, interconnexions et electrification."
+  },
+  {
+    label: "France",
+    fossil: 46,
+    lowCarbon: 54,
+    demand: 71,
+    risk: 37,
+    lat: 46,
+    lon: 2,
+    color: "#2dd4bf",
+    momentum: "+3.9%",
+    note: "Mix electrique tres bas-carbone, tension sur chaleur, transport et flexibilite."
+  },
+  {
+    label: "Amerique du Nord",
+    fossil: 78,
+    lowCarbon: 22,
+    demand: 112,
+    risk: 69,
+    lat: 47,
+    lon: -101,
+    color: "#a78bfa",
+    momentum: "+2.7%",
+    note: "Demande elevee, electrification rapide, reseaux et stockage critiques."
+  },
+  {
+    label: "Asie-Pacifique",
+    fossil: 84,
+    lowCarbon: 16,
+    demand: 142,
+    risk: 82,
+    lat: 28,
+    lon: 105,
+    color: "#fb7185",
+    momentum: "+5.6%",
+    note: "Croissance de demande massive, solaire et stockage a tres grande echelle."
+  },
+  {
+    label: "Afrique",
+    fossil: 71,
+    lowCarbon: 29,
+    demand: 46,
+    risk: 66,
+    lat: 4,
+    lon: 20,
+    color: "#facc15",
+    momentum: "+6.3%",
+    note: "Acces energie, solaire, reseaux resilients et financement sont decisifs."
+  }
 ];
 
 export const sourceFamilies = [

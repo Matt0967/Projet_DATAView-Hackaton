@@ -7,6 +7,7 @@ import {
   ChevronRight,
   CircleGauge,
   Database,
+  Download,
   Factory,
   Flame,
   Gauge,
@@ -17,16 +18,18 @@ import {
   Network,
   Orbit,
   PlugZap,
+  RadioTower,
   RefreshCw,
   Search,
   Settings2,
   ShieldCheck,
   Sparkles,
   SunMedium,
+  Target,
   Waves,
   Zap
 } from "lucide-react";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   commandKpis,
   consumptionTrend,
@@ -68,12 +71,149 @@ const lineColors = {
   batiments: "#a78bfa"
 };
 
+const worldLandShapes = [
+  {
+    name: "North America",
+    points: [
+      [72, -166],
+      [68, -136],
+      [57, -124],
+      [52, -97],
+      [48, -76],
+      [36, -74],
+      [24, -98],
+      [16, -89],
+      [9, -82],
+      [16, -105],
+      [26, -116],
+      [42, -124],
+      [54, -143],
+      [60, -160]
+    ]
+  },
+  {
+    name: "South America",
+    points: [
+      [12, -79],
+      [7, -57],
+      [-8, -42],
+      [-24, -45],
+      [-38, -58],
+      [-54, -70],
+      [-36, -73],
+      [-16, -76],
+      [0, -81]
+    ]
+  },
+  {
+    name: "Europe",
+    points: [
+      [70, -10],
+      [63, 30],
+      [52, 44],
+      [40, 32],
+      [35, 10],
+      [43, -9],
+      [54, -6]
+    ]
+  },
+  {
+    name: "Africa",
+    points: [
+      [35, -17],
+      [31, 34],
+      [11, 51],
+      [-10, 42],
+      [-35, 20],
+      [-30, 5],
+      [-18, -14],
+      [5, -17],
+      [20, -10]
+    ]
+  },
+  {
+    name: "Asia",
+    points: [
+      [72, 34],
+      [69, 92],
+      [58, 140],
+      [43, 151],
+      [22, 122],
+      [8, 103],
+      [19, 78],
+      [8, 45],
+      [30, 34],
+      [50, 47]
+    ]
+  },
+  {
+    name: "Australia",
+    points: [
+      [-12, 113],
+      [-10, 143],
+      [-25, 154],
+      [-38, 137],
+      [-32, 116]
+    ]
+  },
+  {
+    name: "Greenland",
+    points: [
+      [82, -52],
+      [75, -22],
+      [62, -43],
+      [61, -62],
+      [72, -72]
+    ]
+  }
+];
+
 function formatNumber(value) {
   return new Intl.NumberFormat("fr-FR").format(Math.round(value || 0));
 }
 
 function clamp(value, min, max) {
   return Math.max(min, Math.min(max, value));
+}
+
+function worldMetric(signal, mode) {
+  if (mode === "Bas-carbone") return signal.lowCarbon;
+  if (mode === "Demande") return Math.round(signal.demand);
+  return signal.risk;
+}
+
+function worldMetricLabel(mode) {
+  if (mode === "Bas-carbone") return "bas-carbone";
+  if (mode === "Demande") return "demande";
+  return "risque";
+}
+
+function buildScopeDiagnostics(snapshot, scope, catalog) {
+  const sourceHealth = snapshot.apiHealth || [];
+  const liveSources = sourceHealth.filter((source) => source.status !== "fallback").length;
+  const generatedAt = snapshot.generatedAt ? new Date(snapshot.generatedAt) : null;
+  const cacheMinutes = generatedAt ? Math.max(0, Math.round((Date.now() - generatedAt.getTime()) / 60000)) : null;
+  const odreCount = catalog.filter((dataset) => dataset.source === "ODRE").length;
+  const dataGouvCount = catalog.filter((dataset) => dataset.source === "data.gouv.fr").length;
+
+  return {
+    scope,
+    liveSources,
+    cacheMinutes,
+    generatedAt,
+    catalogCount: catalog.length,
+    odreCount,
+    dataGouvCount,
+    label: `${scope}: ${liveSources}/4 caches OK`,
+    detail:
+      scope === "Monde"
+        ? "Monde = contexte global + cache public France/ODRE pour comparaison."
+        : "France = cache public ODRE + data.gouv.fr pour les graphes et datasets."
+  };
+}
+
+function escapeCsv(value) {
+  return `"${String(value ?? "").replaceAll('"', '""')}"`;
 }
 
 function useEnergyIntel() {
@@ -226,11 +366,33 @@ function App() {
     () => extractGasScenarios(snapshot.liveRecords?.gasScenarios),
     [snapshot]
   );
+  const scopeDiagnostics = useMemo(
+    () => buildScopeDiagnostics(snapshot, scope, catalog),
+    [catalog, scope, snapshot]
+  );
 
   const apiLiveCount = (snapshot.apiHealth || []).filter((source) => source.status !== "fallback").length;
   const totalDatasets =
     (snapshot.dataGouv?.total || fallbackSnapshot.dataGouv.total) +
     (snapshot.odre?.total || fallbackSnapshot.odre.total);
+
+  function handlePageChange(pageId) {
+    setActivePage(pageId);
+    if (pageId === "monde") {
+      setScope("Monde");
+    } else if (["cockpit", "mix", "flux", "carbone", "territoires"].includes(pageId)) {
+      setScope("France");
+    }
+  }
+
+  function handleScopeChange(nextScope) {
+    setScope(nextScope);
+    if (nextScope === "Monde") {
+      setActivePage("monde");
+    } else if (activePage === "monde") {
+      setActivePage("cockpit");
+    }
+  }
 
   const context = {
     snapshot,
@@ -238,9 +400,9 @@ function App() {
     error,
     refresh,
     activePage,
-    setActivePage,
+    setActivePage: handlePageChange,
     scope,
-    setScope,
+    setScope: handleScopeChange,
     pulseMode,
     setPulseMode,
     selectedRegion,
@@ -249,13 +411,14 @@ function App() {
     methaneSeries,
     gasScenarios,
     apiLiveCount,
+    scopeDiagnostics,
     totalDatasets
   };
 
   return (
     <div className="app-shell">
       <AmbientGrid />
-      <Sidebar activePage={activePage} setActivePage={setActivePage} />
+      <Sidebar activePage={activePage} setActivePage={handlePageChange} />
       <main className="mission-main">
         <TopBar {...context} />
         {activePage === "cockpit" && <CockpitPage {...context} />}
@@ -332,7 +495,8 @@ function TopBar({
   setPulseMode,
   apiLiveCount,
   totalDatasets,
-  snapshot
+  snapshot,
+  scopeDiagnostics
 }) {
   return (
     <header className="topbar">
@@ -360,6 +524,7 @@ function TopBar({
       </div>
 
       <div className="status-strip">
+        <StatusPill label={scopeDiagnostics.label} tone={scope === "Monde" ? "live" : "neutral"} />
         <StatusPill
           label={`${apiLiveCount}/4 sources cache`}
           tone={apiLiveCount ? "live" : "fallback"}
@@ -722,14 +887,19 @@ function TerritoriesPage({ selectedRegion, setSelectedRegion }) {
   );
 }
 
-function WorldPage({ scope, setScope }) {
+function WorldPage({ scope, setScope, scopeDiagnostics, snapshot, refresh }) {
+  const [selectedWorldLabel, setSelectedWorldLabel] = useState("France");
+  const [worldMode, setWorldMode] = useState("Risque");
+  const selectedWorldSignal =
+    globalSignals.find((signal) => signal.label === selectedWorldLabel) || globalSignals[0];
+
   return (
     <div className="page-grid">
-      <Panel className="span-12">
+      <section className="world-globe-stage span-12">
         <SectionHeader
           icon={Globe2}
-          eyebrow="Monde"
-          title="Comparateur global pour contextualiser la France"
+          eyebrow="Monde 3D"
+          title="Carte globale energie-climat"
           action={
             <button className="secondary-button" onClick={() => setScope(scope === "Monde" ? "France" : "Monde")}>
               <Globe2 size={18} />
@@ -737,11 +907,51 @@ function WorldPage({ scope, setScope }) {
             </button>
           }
         />
-        <WorldPulse />
+        <div className="world-globe-layout">
+          <WorldGlobe3D
+            signals={globalSignals}
+            selectedLabel={selectedWorldLabel}
+            mode={worldMode}
+            onSelect={setSelectedWorldLabel}
+          />
+          <div className="world-control-panel">
+            <SegmentedControl
+              value={worldMode}
+              onChange={setWorldMode}
+              items={["Risque", "Bas-carbone", "Demande"]}
+              label="Lecture globe"
+            />
+            <div className="world-focus">
+              <span>
+                <Target size={16} />
+                Zone active
+              </span>
+              <strong>{selectedWorldSignal.label}</strong>
+              <p>{selectedWorldSignal.note}</p>
+              <div className="world-focus__stats">
+                <small>{selectedWorldSignal.lowCarbon}% bas-carbone</small>
+                <small>{selectedWorldSignal.fossil}% fossile</small>
+                <small>{selectedWorldSignal.momentum} dynamique</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <Panel className="span-8">
+        <SectionHeader icon={Activity} eyebrow="Signaux" title="Radar des zones mondiales" />
+        <WorldPulse
+          selectedLabel={selectedWorldLabel}
+          onSelect={setSelectedWorldLabel}
+          mode={worldMode}
+        />
+      </Panel>
+      <Panel className="span-4">
+        <SectionHeader icon={RadioTower} eyebrow="API check" title="Bascule France / Monde" />
+        <ScopeDataPanel diagnostics={scopeDiagnostics} snapshot={snapshot} onRefresh={refresh} />
       </Panel>
       <Panel className="span-7">
         <SectionHeader icon={BarChart3} eyebrow="Mix global" title="Fossile vs bas-carbone" />
-        <ComparativeBars />
+        <ComparativeBars selectedLabel={selectedWorldLabel} onSelect={setSelectedWorldLabel} />
       </Panel>
       <Panel className="span-5">
         <SectionHeader icon={Activity} eyebrow="Timeline" title="Moments de transition" />
@@ -873,10 +1083,44 @@ function DataExplorerPage({ catalog }) {
     window.setTimeout(() => setIsSearching(false), 180);
   }
 
+  function exportCsv() {
+    const headers = ["source", "titre", "editeur", "theme", "energie", "score", "ressources", "url"];
+    const rows = filteredCatalog.map((dataset) => [
+      dataset.source,
+      dataset.title,
+      dataset.publisher,
+      dataset.theme,
+      dataset.energy,
+      Math.round(dataset.quality || 0),
+      dataset.records || 0,
+      dataset.page || ""
+    ]);
+    const csv = [headers, ...rows].map((row) => row.map(escapeCsv).join(";")).join("\n");
+    const blob = new Blob([`\uFEFF${csv}`], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `mission-control-datasets-${sourceFilter.toLowerCase().replaceAll(".", "-")}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 0);
+  }
+
   return (
     <div className="page-grid">
       <Panel className="span-12">
-        <SectionHeader icon={Search} eyebrow="Catalogue" title="Explorer les donnees energie / ecologie" />
+        <SectionHeader
+          icon={Search}
+          eyebrow="Catalogue"
+          title="Explorer les donnees energie / ecologie"
+          action={
+            <button className="secondary-button" onClick={exportCsv}>
+              <Download size={17} />
+              Export CSV
+            </button>
+          }
+        />
         <form className="search-bar" onSubmit={runSearch}>
           <Search size={18} />
           <input
@@ -930,11 +1174,11 @@ function SourcesPage({ snapshot, totalDatasets, catalog }) {
         <SectionHeader icon={ShieldCheck} eyebrow="Robustesse" title="Strategie anti-bug de demo" />
         <div className="safety-grid">
           <article>
-            <strong>Backend proxy</strong>
-            <p>Le navigateur parle au serveur local, ce qui reduit les soucis CORS et centralise les timeouts.</p>
+            <strong>Build statique</strong>
+            <p>GitHub Actions appelle les APIs publiques, puis publie un JSON pret pour GitHub Pages.</p>
           </article>
           <article>
-            <strong>Cache 5 minutes</strong>
+            <strong>Cache programme</strong>
             <p>Les APIs publiques sont appelees par GitHub Actions, puis servies en JSON statique.</p>
           </article>
           <article>
@@ -1252,36 +1496,541 @@ function ImpactMatrix() {
   );
 }
 
-function WorldPulse() {
+function WorldGlobe3D({ signals, selectedLabel, mode, onSelect }) {
+  const canvasRef = useRef(null);
+  const onSelectRef = useRef(onSelect);
+
+  useEffect(() => {
+    onSelectRef.current = onSelect;
+  }, [onSelect]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return undefined;
+
+    let cancelled = false;
+    let cleanup = () => {};
+    let upgradeTimer = 0;
+
+    cleanup = startCanvasGlobe(canvas, signals, selectedLabel, mode, onSelectRef);
+
+    async function bootGlobe() {
+      try {
+        const THREE = await import(/* @vite-ignore */ "https://esm.sh/three@0.184.0");
+        if (!cancelled) {
+          const probe = document.createElement("canvas");
+          const hasWebGL = Boolean(probe.getContext("webgl2") || probe.getContext("webgl"));
+          if (!hasWebGL) return;
+
+          const threeCanvas = document.createElement("canvas");
+          threeCanvas.className = "globe-three-layer";
+          canvas.after(threeCanvas);
+
+          const fallbackCleanup = cleanup;
+          let threeCleanup = () => {};
+          try {
+            threeCleanup = startThreeGlobe(
+              threeCanvas,
+              THREE,
+              signals,
+              selectedLabel,
+              mode,
+              onSelectRef
+            );
+          } catch {
+            threeCanvas.remove();
+            return;
+          }
+          fallbackCleanup();
+          canvas.style.opacity = "0";
+          cleanup = () => {
+            threeCleanup();
+            threeCanvas.remove();
+            canvas.style.opacity = "";
+          };
+        }
+      } catch {}
+    }
+
+    upgradeTimer = window.setTimeout(bootGlobe, 900);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(upgradeTimer);
+      cleanup();
+    };
+  }, [mode, selectedLabel, signals]);
+
+  return (
+    <div className="world-globe-canvas" aria-label="Carte du monde 3D interactive">
+      <canvas ref={canvasRef} />
+      <div className="globe-hud" aria-hidden="true">
+        <span>{worldMetricLabel(mode)}</span>
+        <strong>{selectedLabel}</strong>
+      </div>
+    </div>
+  );
+}
+
+function startThreeGlobe(canvas, THREE, signals, selectedLabel, mode, onSelectRef) {
+  const parent = canvas.parentElement;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: true,
+    alpha: true,
+    preserveDrawingBuffer: true
+  });
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  const group = new THREE.Group();
+  const markerGroup = new THREE.Group();
+  const selectedSignal = signals.find((signal) => signal.label === selectedLabel) || signals[0];
+  let frame = 0;
+  let renderFrame = 0;
+
+  canvas.dataset.renderMode = "three";
+  camera.position.set(0, 0.45, 7.2);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  scene.add(group);
+  scene.add(new THREE.AmbientLight(0x87d9ff, 1.25));
+
+  const keyLight = new THREE.DirectionalLight(0xffffff, 2.35);
+  keyLight.position.set(4, 3, 5);
+  scene.add(keyLight);
+
+  const rimLight = new THREE.PointLight(0x2dd4bf, 3.4, 12);
+  rimLight.position.set(-3.5, 1.6, 3.8);
+  scene.add(rimLight);
+
+  const texture = new THREE.CanvasTexture(createWorldTexture(signals, selectedLabel, mode));
+  if (THREE.SRGBColorSpace) texture.colorSpace = THREE.SRGBColorSpace;
+
+  const globe = new THREE.Mesh(
+    new THREE.SphereGeometry(2.35, 96, 64),
+    new THREE.MeshStandardMaterial({
+      map: texture,
+      roughness: 0.78,
+      metalness: 0.06
+    })
+  );
+  group.add(globe);
+
+  const atmosphere = new THREE.Mesh(
+    new THREE.SphereGeometry(2.42, 96, 64),
+    new THREE.MeshBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.11,
+      side: THREE.BackSide
+    })
+  );
+  group.add(atmosphere);
+
+  const starsGeometry = new THREE.BufferGeometry();
+  const starPositions = [];
+  for (let index = 0; index < 420; index += 1) {
+    const radius = 7 + Math.random() * 5;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(Math.random() * 2 - 1);
+    starPositions.push(
+      radius * Math.sin(phi) * Math.cos(theta),
+      radius * Math.sin(phi) * Math.sin(theta),
+      radius * Math.cos(phi)
+    );
+  }
+  starsGeometry.setAttribute("position", new THREE.Float32BufferAttribute(starPositions, 3));
+  const stars = new THREE.Points(
+    starsGeometry,
+    new THREE.PointsMaterial({ color: 0xbfefff, size: 0.025, transparent: true, opacity: 0.62 })
+  );
+  scene.add(stars);
+
+  const franceSignal = signals.find((signal) => signal.label === "France") || selectedSignal;
+  signals.forEach((signal) => {
+    const marker = new THREE.Mesh(
+      new THREE.SphereGeometry(signal.label === selectedLabel ? 0.082 : 0.058, 24, 16),
+      new THREE.MeshBasicMaterial({
+        color: new THREE.Color(signal.label === selectedLabel ? "#ffffff" : signal.color),
+        transparent: true,
+        opacity: signal.label === selectedLabel ? 1 : 0.86
+      })
+    );
+    marker.position.copy(latLonToVector3(THREE, signal.lat, signal.lon, 2.43));
+    marker.userData.label = signal.label;
+    markerGroup.add(marker);
+
+    if (signal.label !== "France" && signal.label !== "Monde") {
+      group.add(createGlobeArc(THREE, franceSignal, signal, signal.color));
+    }
+  });
+  group.add(markerGroup);
+
+  function resize() {
+    const rect = parent.getBoundingClientRect();
+    const width = Math.max(320, Math.floor(rect.width));
+    const height = Math.max(360, Math.floor(rect.height));
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  }
+
+  function handlePointerDown(event) {
+    const rect = canvas.getBoundingClientRect();
+    pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    pointer.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
+    raycaster.setFromCamera(pointer, camera);
+    const hit = raycaster.intersectObjects(markerGroup.children, false)[0];
+    if (hit?.object?.userData?.label) {
+      onSelectRef.current(hit.object.userData.label);
+    }
+  }
+
+  function animate() {
+    frame = requestAnimationFrame(animate);
+    renderFrame += 1;
+    group.rotation.y += 0.0028;
+    group.rotation.x = -0.13 + Math.sin(Date.now() / 2400) * 0.015;
+    markerGroup.children.forEach((marker) => {
+      const active = marker.userData.label === selectedLabel;
+      const pulse = active ? 1 + Math.sin(Date.now() / 180) * 0.08 : 1;
+      marker.scale.setScalar(pulse);
+    });
+    stars.rotation.y -= 0.0007;
+    renderer.render(scene, camera);
+    if (renderFrame % 12 === 0) {
+      canvas.dataset.renderFrame = String(renderFrame);
+      canvas.dataset.pixelReady = "true";
+    }
+  }
+
+  resize();
+  renderer.render(scene, camera);
+  canvas.dataset.renderFrame = "1";
+  canvas.dataset.pixelReady = "true";
+  canvas.addEventListener("pointerdown", handlePointerDown);
+  window.addEventListener("resize", resize);
+  animate();
+
+  return () => {
+    cancelAnimationFrame(frame);
+    canvas.removeEventListener("pointerdown", handlePointerDown);
+    window.removeEventListener("resize", resize);
+    texture.dispose();
+    renderer.dispose();
+    scene.traverse((object) => {
+      object.geometry?.dispose?.();
+      object.material?.dispose?.();
+    });
+  };
+}
+
+function startCanvasGlobe(canvas, signals, selectedLabel, mode, onSelectRef) {
+  const context = canvas.getContext("2d");
+  const parent = canvas.parentElement;
+  const markerHits = [];
+  let frame = 0;
+  let renderFrame = 0;
+  let rotation = 0;
+
+  canvas.dataset.renderMode = "canvas";
+  function resize() {
+    const rect = parent.getBoundingClientRect();
+    const ratio = 1;
+    canvas.width = Math.max(320, Math.floor(rect.width * ratio));
+    canvas.height = Math.max(360, Math.floor(rect.height * ratio));
+    canvas.style.width = `${Math.max(320, Math.floor(rect.width))}px`;
+    canvas.style.height = `${Math.max(360, Math.floor(rect.height))}px`;
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+  }
+
+  function project(lat, lon, radius, centerX, centerY) {
+    const phi = (lat * Math.PI) / 180;
+    const lambda = ((lon * Math.PI) / 180) + rotation;
+    const x = Math.cos(phi) * Math.sin(lambda);
+    const y = Math.sin(phi);
+    const z = Math.cos(phi) * Math.cos(lambda);
+    return {
+      x: centerX + x * radius,
+      y: centerY - y * radius,
+      z
+    };
+  }
+
+  function draw() {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = Math.min(width, height) * 0.36;
+    markerHits.length = 0;
+    rotation += 0.004;
+    renderFrame += 1;
+
+    context.clearRect(0, 0, width, height);
+    const glow = context.createRadialGradient(centerX, centerY, radius * 0.2, centerX, centerY, radius * 1.2);
+    glow.addColorStop(0, "rgba(56,189,248,0.24)");
+    glow.addColorStop(1, "rgba(56,189,248,0)");
+    context.fillStyle = glow;
+    context.fillRect(0, 0, width, height);
+
+    const ocean = context.createRadialGradient(centerX - radius * 0.25, centerY - radius * 0.35, 0, centerX, centerY, radius);
+    ocean.addColorStop(0, "#163449");
+    ocean.addColorStop(0.62, "#0b1e2d");
+    ocean.addColorStop(1, "#07111b");
+    context.beginPath();
+    context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    context.fillStyle = ocean;
+    context.fill();
+    context.save();
+    context.clip();
+
+    context.strokeStyle = "rgba(159,221,244,0.13)";
+    context.lineWidth = 1;
+    for (let lat = -60; lat <= 60; lat += 30) {
+      context.beginPath();
+      for (let lon = -180; lon <= 180; lon += 8) {
+        const point = project(lat, lon, radius, centerX, centerY);
+        if (point.z < -0.25) continue;
+        context[lon === -180 ? "moveTo" : "lineTo"](point.x, point.y);
+      }
+      context.stroke();
+    }
+
+    worldLandShapes.forEach((shape) => {
+      context.beginPath();
+      shape.points.forEach(([lat, lon], index) => {
+        const point = project(lat, lon, radius, centerX, centerY);
+        context[index ? "lineTo" : "moveTo"](point.x, point.y);
+      });
+      context.closePath();
+      context.fillStyle = "rgba(45,212,191,0.34)";
+      context.strokeStyle = "rgba(238,245,248,0.24)";
+      context.lineWidth = 1.2;
+      context.fill();
+      context.stroke();
+    });
+
+    signals.forEach((signal) => {
+      const point = project(signal.lat, signal.lon, radius * 1.03, centerX, centerY);
+      if (point.z < -0.12) return;
+      const active = signal.label === selectedLabel;
+      const dotRadius = active ? 8 : 5;
+      context.beginPath();
+      context.arc(point.x, point.y, dotRadius + 7, 0, Math.PI * 2);
+      context.fillStyle = active ? "rgba(255,255,255,0.15)" : "rgba(45,212,191,0.08)";
+      context.fill();
+      context.beginPath();
+      context.arc(point.x, point.y, dotRadius, 0, Math.PI * 2);
+      context.fillStyle = active ? "#ffffff" : signal.color;
+      context.fill();
+      markerHits.push({ label: signal.label, x: point.x, y: point.y, radius: dotRadius + 10 });
+    });
+
+    context.restore();
+    context.beginPath();
+    context.arc(centerX, centerY, radius, 0, Math.PI * 2);
+    context.strokeStyle = "rgba(238,245,248,0.28)";
+    context.lineWidth = 1.4;
+    context.stroke();
+
+    context.fillStyle = "rgba(238,245,248,0.8)";
+    context.font = "700 12px system-ui";
+    context.fillText(`${worldMetricLabel(mode)}: ${selectedLabel}`, 18, height - 20);
+    canvas.dataset.renderFrame = String(renderFrame);
+    canvas.dataset.pixelReady = "true";
+    frame = window.setTimeout(() => requestAnimationFrame(draw), 34);
+  }
+
+  function handlePointerDown(event) {
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const hit = markerHits.find((marker) => Math.hypot(marker.x - x, marker.y - y) <= marker.radius);
+    if (hit) onSelectRef.current(hit.label);
+  }
+
+  resize();
+  canvas.addEventListener("pointerdown", handlePointerDown);
+  window.addEventListener("resize", resize);
+  draw();
+
+  return () => {
+    window.clearTimeout(frame);
+    canvas.removeEventListener("pointerdown", handlePointerDown);
+    window.removeEventListener("resize", resize);
+  };
+}
+
+function latLonToVector3(THREE, lat, lon, radius) {
+  const phi = ((90 - lat) * Math.PI) / 180;
+  const theta = ((lon + 180) * Math.PI) / 180;
+  return new THREE.Vector3(
+    -radius * Math.sin(phi) * Math.cos(theta),
+    radius * Math.cos(phi),
+    radius * Math.sin(phi) * Math.sin(theta)
+  );
+}
+
+function createGlobeArc(THREE, startSignal, endSignal, color) {
+  const start = latLonToVector3(THREE, startSignal.lat, startSignal.lon, 2.46);
+  const end = latLonToVector3(THREE, endSignal.lat, endSignal.lon, 2.46);
+  const middle = start.clone().add(end).multiplyScalar(0.5).normalize().multiplyScalar(3.25);
+  const curve = new THREE.QuadraticBezierCurve3(start, middle, end);
+  const geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(46));
+  return new THREE.Line(
+    geometry,
+    new THREE.LineBasicMaterial({
+      color: new THREE.Color(color),
+      transparent: true,
+      opacity: 0.48
+    })
+  );
+}
+
+function createWorldTexture(signals, selectedLabel, mode) {
+  const textureCanvas = document.createElement("canvas");
+  textureCanvas.width = 1024;
+  textureCanvas.height = 512;
+  const context = textureCanvas.getContext("2d");
+  const gradient = context.createLinearGradient(0, 0, 1024, 512);
+  gradient.addColorStop(0, "#07111b");
+  gradient.addColorStop(0.52, "#0d2a3e");
+  gradient.addColorStop(1, "#041018");
+  context.fillStyle = gradient;
+  context.fillRect(0, 0, 1024, 512);
+
+  context.strokeStyle = "rgba(159,221,244,0.12)";
+  context.lineWidth = 1;
+  for (let lon = -150; lon <= 150; lon += 30) {
+    const x = ((lon + 180) / 360) * 1024;
+    context.beginPath();
+    context.moveTo(x, 0);
+    context.lineTo(x, 512);
+    context.stroke();
+  }
+  for (let lat = -60; lat <= 60; lat += 30) {
+    const y = ((90 - lat) / 180) * 512;
+    context.beginPath();
+    context.moveTo(0, y);
+    context.lineTo(1024, y);
+    context.stroke();
+  }
+
+  worldLandShapes.forEach((shape) => {
+    context.beginPath();
+    shape.points.forEach(([lat, lon], index) => {
+      const x = ((lon + 180) / 360) * 1024;
+      const y = ((90 - lat) / 180) * 512;
+      context[index ? "lineTo" : "moveTo"](x, y);
+    });
+    context.closePath();
+    context.fillStyle = "rgba(45,212,191,0.34)";
+    context.strokeStyle = "rgba(238,245,248,0.22)";
+    context.lineWidth = 2;
+    context.fill();
+    context.stroke();
+  });
+
+  signals.forEach((signal) => {
+    const x = ((signal.lon + 180) / 360) * 1024;
+    const y = ((90 - signal.lat) / 180) * 512;
+    const active = signal.label === selectedLabel;
+    context.beginPath();
+    context.arc(x, y, active ? 15 : 10, 0, Math.PI * 2);
+    context.fillStyle = active ? "rgba(255,255,255,0.9)" : signal.color;
+    context.fill();
+    context.font = "700 18px system-ui";
+    context.fillStyle = active ? "#ffffff" : "rgba(238,245,248,0.78)";
+    context.fillText(String(worldMetric(signal, mode)), x + 16, y + 6);
+  });
+
+  return textureCanvas;
+}
+
+function ScopeDataPanel({ diagnostics, snapshot, onRefresh }) {
+  const health = snapshot.apiHealth || [];
+  const generated = diagnostics.generatedAt
+    ? diagnostics.generatedAt.toLocaleString("fr-FR", {
+        day: "2-digit",
+        month: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      })
+    : "cache local";
+
+  return (
+    <div className="scope-data-panel">
+      <div className="scope-data-score">
+        <strong>{diagnostics.liveSources}/4</strong>
+        <span>sources cache valides</span>
+      </div>
+      <p>{diagnostics.detail}</p>
+      <div className="scope-data-grid">
+        <span>{diagnostics.catalogCount} cartes data</span>
+        <span>{diagnostics.odreCount} ODRE</span>
+        <span>{diagnostics.dataGouvCount} data.gouv.fr</span>
+        <span>{generated}</span>
+      </div>
+      <div className="mini-health-list">
+        {health.map((source) => (
+          <span key={source.name}>
+            <i className={`health-led ${source.status}`} />
+            {source.name}
+          </span>
+        ))}
+      </div>
+      <button className="secondary-button" onClick={onRefresh}>
+        <RefreshCw size={17} />
+        Relire le cache
+      </button>
+    </div>
+  );
+}
+
+function WorldPulse({ selectedLabel, onSelect, mode }) {
   return (
     <div className="world-pulse">
       {globalSignals.map((signal, index) => (
-        <article key={signal.label} className="world-card" style={{ "--delay": `${index * 0.12}s` }}>
+        <button
+          key={signal.label}
+          className={signal.label === selectedLabel ? "world-card active" : "world-card"}
+          style={{ "--delay": `${index * 0.12}s`, "--accent": signal.color }}
+          onClick={() => onSelect(signal.label)}
+          title={`Analyser ${signal.label}`}
+        >
           <span>{signal.label}</span>
-          <strong>{signal.lowCarbon}%</strong>
-          <small>bas-carbone</small>
+          <strong>{worldMetric(signal, mode)}{mode === "Demande" ? "" : "%"}</strong>
+          <small>{worldMetricLabel(mode)}</small>
           <div className="world-meter">
             <i style={{ width: `${signal.fossil}%` }} />
           </div>
           <em>risque {signal.risk}</em>
-        </article>
+        </button>
       ))}
     </div>
   );
 }
 
-function ComparativeBars() {
+function ComparativeBars({ selectedLabel, onSelect }) {
   return (
     <div className="comparative-bars">
       {globalSignals.map((signal) => (
-        <div key={signal.label} className="compare-row">
+        <button
+          key={signal.label}
+          className={signal.label === selectedLabel ? "compare-row active" : "compare-row"}
+          onClick={() => onSelect(signal.label)}
+        >
           <span>{signal.label}</span>
           <div className="compare-track">
             <i className="fossil" style={{ width: `${signal.fossil}%` }} />
             <i className="low" style={{ width: `${signal.lowCarbon}%` }} />
           </div>
           <strong>{signal.lowCarbon}%</strong>
-        </div>
+        </button>
       ))}
     </div>
   );
