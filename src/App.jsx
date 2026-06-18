@@ -1482,7 +1482,7 @@ function ImpactMatrix() {
           className="matrix-dot"
           style={{
             left: `${lever.complexity}%`,
-            bottom: `${lever.impact}%`,
+            top: `${100 - lever.impact}%`,
             background: lever.color
           }}
           title={`${lever.label}: impact ${lever.impact}, complexite ${lever.complexity}`}

@@ -205,7 +205,7 @@ a {
 .mission-main {
   width: 100%;
   min-width: 0;
-  padding: 22px clamp(16px, 3vw, 34px) 42px;
+  padding: 28px clamp(16px, 3vw, 34px) 42px;
 }
 
 .topbar {
@@ -225,7 +225,7 @@ a {
 
 .topbar h1 {
   font-size: clamp(28px, 3.2vw, 48px);
-  line-height: 1;
+  line-height: 1.08;
 }
 
 .eyebrow {
@@ -562,7 +562,8 @@ a {
 
 .section-header h2 {
   font-size: clamp(20px, 2.1vw, 30px);
-  line-height: 1.06;
+  line-height: 1.12;
+  overflow-wrap: anywhere;
 }
 
 .split-panel,
@@ -809,25 +810,31 @@ a {
   border-radius: inherit;
 }
 
-.gauge-stack,
-.region-detail {
+.gauge-stack {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
+.region-detail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(138px, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
 .radial-meter {
   position: relative;
   display: grid;
-  min-height: 145px;
+  min-height: clamp(132px, 15vw, 164px);
   place-items: center;
   text-align: center;
 }
 
 .radial-meter svg {
   position: absolute;
-  width: 112px;
-  height: 112px;
+  width: clamp(96px, 10vw, 116px);
+  height: clamp(96px, 10vw, 116px);
   transform: rotate(-90deg);
 }
 
@@ -848,16 +855,18 @@ a {
 .radial-meter strong {
   position: relative;
   z-index: 1;
-  font-size: 26px;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1;
 }
 
 .radial-meter span {
   position: relative;
   z-index: 1;
   align-self: end;
-  max-width: 120px;
+  max-width: 140px;
   color: #97a9b0;
-  font-size: 12px;
+  font-size: clamp(12px, 1.3vw, 14px);
+  line-height: 1.18;
 }
 
 .carbon-callout {
@@ -880,7 +889,8 @@ a {
 
 .impact-matrix {
   position: relative;
-  min-height: 360px;
+  min-height: clamp(380px, 34vw, 520px);
+  overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   background-image:
@@ -891,14 +901,18 @@ a {
 
 .matrix-dot {
   position: absolute;
-  max-width: 150px;
-  padding: 6px 9px;
+  min-width: 112px;
+  max-width: min(210px, 22vw);
+  padding: 8px 12px;
   border-radius: 999px;
   color: #051011;
-  font-size: 12px;
+  font-size: clamp(11px, 1vw, 14px);
   font-weight: 900;
-  transform: translate(-50%, 50%);
-  white-space: normal;
+  line-height: 1.14;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
 }
 
 .axis {
@@ -1717,6 +1731,18 @@ td {
     align-items: end;
     overflow-x: auto;
     justify-content: flex-start;
+  }
+
+  .impact-matrix {
+    min-height: 430px;
+  }
+
+  .matrix-dot {
+    min-width: 86px;
+    max-width: 128px;
+    padding: 7px 9px;
+    font-size: 11px;
+    white-space: normal;
   }
 
   .france-map {
